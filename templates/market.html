@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>market page</title>
+    <!-- You can include additional CSS or JavaScript files here -->
+  <style>
+      /* Add some basic styling to the table */
+      table {
+          width: 100%;
+          border-collapse: collapse;
+      }
+      th {
+          border: 1px solid black;
+          padding: 8px;
+          text-align: left;
+      }
+  </style>
+</head>
+<body>
+
+    <!-- Your content goes here -->
+ {% include 'nav.html'%}
+
+   <h2>MARKET PAGE</h2>
+   <table>
+       <thead>
+           <tr>
+               <th>ID</th>
+               <th>Name</th>
+               <th>Barcode</th>
+               <th>Price</th>
+               <th>Options</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <td>1</td>
+               <td>Phone </td>
+               <td>1234567890</td>
+               <td>$19.99</td>
+               <td>
+                  <button class='btn btn-outline btn-info'>More Infor</button>
+                  <button class='btn btn-outline btn-success'>Purchase this Item</button>
+                </td>
+           </tr>
+           <tr>
+               <td>2</td>
+               <td>Laptop</td>
+               <td>0987654321</td>
+               <td>$152.49</td>
+               <td>
+                   <button class='btn btn-outline btn-info'>More Infor</button>
+                   <button class='btn btn-outline btn-success'>Purchase this Item</button>
+                 </td>
+           </tr>
+           <tr>
+               <td>3</td>
+               <td>Mouse</td>
+               <td>1357924680</td>
+               <td>$8.99</td>
+               <td>
+                  <button class='btn btn-outline btn-info'>More Infor</button>
+                  <button class='btn btn-outline btn-success'>Purchase this Item</button>
+                </td>
+           </tr>
+           <tr>
+               <td>4</td>
+               <td>CPU</td>
+               <td>2468013579</td>
+               <td>$74.99</td>
+               <td>
+                 <button class='btn btn-outline btn-info'>More Infor</button>
+                 <button class='btn btn-outline btn-success'>Purchase this Item</button>
+               </td>
+           </tr>
+       </tbody>
+   </table>
+
+    <!-- You can add more HTML elements as needed -->
+
+    <!-- You can include external scripts at the end of the body tag for better performance -->
+    <!-- Example: <script src="your-script.js"></script> -->
+</body>
+</html>
