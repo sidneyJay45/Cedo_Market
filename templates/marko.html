@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markot</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Market</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Barcode</th>
+            <th>Description</th>
+        </tr>
+        <!-- Phone -->
+        <tr>
+            <td>Phone</td>
+            <td>$500</td>
+            <td>123456789001</td>
+            <td>
+                <form action="{{ url_for('purchase_item') }}" method="post">
+                    <button type="submit">Purchase This Item</button>
+                </form>
+                <form action="{{ url_for('more_info') }}" method="get">
+                    <button type="submit">More Info</button>
+                </form>
+            </td>
+        </tr>
+        <!-- Laptop -->
+        <tr>
+            <td>Laptop</td>
+            <td>$1000</td>
+            <td>123456789002</td>
+            <td>
+                <form action="{{ url_for('purchase_item') }}" method="post">
+                    <button type="submit">Purchase This Item</button>
+                </form>
+                <form action="{{ url_for('more_info') }}" method="get">
+                    <button type="submit">More Info</button>
+                </form>
+            </td>
+        </tr>
+        <!-- Mouse -->
+        <tr>
+            <td>Mouse</td>
+            <td>$20</td>
+            <td>123456789003</td>
+            <td>
+                <form action="{{ url_for('purchase_item') }}" method="post">
+                    <button type="submit">Purchase This Item</button>
+                </form>
+                <form action="{{ url_for('more_info') }}" method="get">
+                    <button type="submit">More Info</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

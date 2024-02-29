@@ -9,20 +9,33 @@
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#" style="color: blue;">HOME <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{ url_for('home_page') }}" style="color: blue;">HOME <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" style="color: blue;">FEATURES</a>
+        <a class="nav-link" href="{{ url_for('market_page') }}" style="color: blue;">MARKET</a>
       </li>
     </ul>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#" style="color: blue;">LOGIN</a>
+        <a class="nav-link" href="{{ url_for('login_page') }}" style="color: blue;">LOGIN</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" style="color: blue;">REGISTER</a>
+        <a class="nav-link" href="{{ url_for('register_page') }}"style="color: blue;">REGISTER</a>
       </li>
     </ul>
   </div>
 </nav>
-
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="container mt-4">
+  {% for category, message in messages %}
+  <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="m1-2 mb-1 close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endwith %}

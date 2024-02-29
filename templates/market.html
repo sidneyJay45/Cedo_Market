@@ -3,84 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>market page</title>
+    <title>Market Page</title>
     <!-- You can include additional CSS or JavaScript files here -->
-  <style>
-      /* Add some basic styling to the table */
-      table {
-          width: 100%;
-          border-collapse: collapse;
-      }
-      th {
-          border: 1px solid black;
-          padding: 8px;
-          text-align: left;
-      }
-  </style>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        table {
+            width: 75%;
+            margin: auto;
+            background-color: white;
+        }
+
+        th, td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: whitesmoke;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: ghostwhite;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: lightgrey;
+        }
+
+        .jomo {
+            text-align: center;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #f2f2f2;
+        }
+     
+    </style>
 </head>
 <body>
 
-    <!-- Your content goes here -->
- {% include 'nav.html'%}
+<!-- Your content goes here -->
+{% include 'nav.html' %}
+{% for item in items %}
+    {% include 'includes/items_modal.html' %}
+{% endfor %}
+<div class='jomo'>
+    <h2><strong>MARKET PAGE</strong></h2>
+    <br>
+    <h2>Ready for purchase?</h2>
+    <h3>Our Items</h3>
+</div>
+  <table>
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Barcode</th>
+              <th>Price</th>
+              <th>Description</th>
+          </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+          <tr>
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.barcode }}</td>
+              <td>${{ item.price }}</td>
+              <td>
+                  <button class='btn btn-outline btn-info' data-toggle='modal' data-target="#Modal-MoreInfo-{{ item.id }}">More Info</button>
+                  <button class='btn btn-outline btn-success' data-toggle='modal' data-target="#Modal-PurchaseConfirm-{{ item.id}}">Purchase this Item</button>
+              </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+  </table>
+ 
+  <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-4">
+              <h2 class="text-center">Owned Items</h2>
+              <p class="text-center">Click on sell item to put an item on the market</p>
+              <br>
+              <div class="row justify-content-center">
+                  {% for item in items %}
+                  {% include 'includes/sell_items_modal.html' %}
+                  <div class="col-md-6">
+                      <div style="margin-bottom: 10px" class="card text-center bg-dark">
+                          <div class="card-body">
+                              <h5 class="card-title">On sale</h5>
+                              <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#Modal-SellingConfirm-{{ item.id }}">Sell Item</button>
+                              <p class="card-text">Sell your Item!</p>
+                          </div>
+                      </div>
+                  </div>
+                  {% endfor %}
+              </div>
+          </div>
+      </div>
+  </div>
 
-   <h2>MARKET PAGE</h2>
-   <table>
-       <thead>
-           <tr>
-               <th>ID</th>
-               <th>Name</th>
-               <th>Barcode</th>
-               <th>Price</th>
-               <th>Options</th>
-           </tr>
-       </thead>
-       <tbody>
-           <tr>
-               <td>1</td>
-               <td>Phone </td>
-               <td>1234567890</td>
-               <td>$19.99</td>
-               <td>
-                  <button class='btn btn-outline btn-info'>More Infor</button>
-                  <button class='btn btn-outline btn-success'>Purchase this Item</button>
-                </td>
-           </tr>
-           <tr>
-               <td>2</td>
-               <td>Laptop</td>
-               <td>0987654321</td>
-               <td>$152.49</td>
-               <td>
-                   <button class='btn btn-outline btn-info'>More Infor</button>
-                   <button class='btn btn-outline btn-success'>Purchase this Item</button>
-                 </td>
-           </tr>
-           <tr>
-               <td>3</td>
-               <td>Mouse</td>
-               <td>1357924680</td>
-               <td>$8.99</td>
-               <td>
-                  <button class='btn btn-outline btn-info'>More Infor</button>
-                  <button class='btn btn-outline btn-success'>Purchase this Item</button>
-                </td>
-           </tr>
-           <tr>
-               <td>4</td>
-               <td>CPU</td>
-               <td>2468013579</td>
-               <td>$74.99</td>
-               <td>
-                 <button class='btn btn-outline btn-info'>More Infor</button>
-                 <button class='btn btn-outline btn-success'>Purchase this Item</button>
-               </td>
-           </tr>
-       </tbody>
-   </table>
+<!-- You can add more HTML elements as needed -->
 
-    <!-- You can add more HTML elements as needed -->
+<!-- You can include external scripts at the end of the body tag for better performance -->
+<!-- Example: <script src="your-script.js"></script> -->
+<h3 class="footer">Enjoy Shopping buddy!</h3>
 
-    <!-- You can include external scripts at the end of the body tag for better performance -->
-    <!-- Example: <script src="your-script.js"></script> -->
 </body>
+<style>
+    body {
+        background-color: #FFD700;
+        font-family: 'Comic Sans MS', cursive, sans-serif; /* Sky blue background color */
+    }
+
+    .container {
+        margin-top: 100px; /* Adjust top margin as needed */
+    }
+   
+</style>
 </html>

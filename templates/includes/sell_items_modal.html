@@ -1,0 +1,40 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+<!-- Sell this item -->
+<div class="modal fade" id="Modal-SellingConfirm-{{ item.id}}"  tabindex="-1" aria-labelledby="exampleModallabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Modallabel">{{item.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form method="POST">
+          {{ sell_form.hidden_tag()}}
+          <h4 class= 'text-center'>
+           Are you sure you want to sell {{ item.name}} for {{ item.price }}$ ? 
+          </h4>
+          <h6 class='text-center'>
+            By clicking on the button below, you will sell the Item
+          </h6>
+          <br>
+          <input id="sell_item" name="sell_item" type="hidden" value="{{ item.name}}">
+          {{ sell_form.submit(class="btn btn-outline-success btn-block")}}
+        
+        </form><!-- Here goes the content -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,512 @@
+from flask_sqlalchemy import SQLAlchemy
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'
+db = SQLAlchemy(app)
+
+with app.app_context():
+db.create_all()
+
+
+class Item(db.Model):
+ID = db.Column(db.Integer, primary_key=True)
+Name = db.Column(db.String(30), nullable=False, unique=True)
+Price = db.Column(db.Integer(), nullable=False)
+Barcode = db.Column(db.String(12), nullable=False, unique=True)
+Description = db.Column(db.String(1024), nullable=False, unique=True)
+
+
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+# SQLite3 database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'  # SQLite database file name
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize the database
+db = SQLAlchemy(app)
+
+# Define a model for your database table
+class Item(db.Model):
+    ID = db.Column(db.Integer, primary_key=True)
+    Name = db.Column(db.String(30), nullable=False, unique=True)
+    Price = db.Column(db.Integer(), nullable=False)
+    Barcode = db.Column(db.String(12), nullable=False, unique=True)
+    Description = db.Column(db.String(1024), nullable=False, unique=True)
+
+# Wrap database operations in application context
+with app.app_context():
+    # Create the database tables based on defined models
+    db.create_all()
+
+@app.route('/')
+def home_page():
+    return render_template("home.html")
+
+@app.route('/market')
+def market_page():
+    return render_template("market.html")
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
+
+
+
+
+from flask import Flask, render_template, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+# SQLite3 database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'  # SQLite database file name
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize the database
+db = SQLAlchemy(app)
+
+# Define a model for your database table
+class Item(db.Model):
+    ID = db.Column(db.Integer, primary_key=True)
+    Name = db.Column(db.String(30), nullable=False, unique=True)
+    Price = db.Column(db.Integer(), nullable=False)
+    Barcode = db.Column(db.String(12), nullable=False, unique=True)
+    Description = db.Column(db.String(1024), nullable=True, unique=True)
+
+# Wrap database operations in application context
+with app.app_context():
+    # Create the database tables based on defined models
+    db.create_all()
+
+# Route to add both items 1 and 2
+@app.route('/add_items')
+# Route to add both items 1 and 2
+@app.route('/add_items')
+# Route to add both items 1 and 2
+@app.route('/add_items')
+def add_items():
+    try:
+        # Add item 1
+        item1 = Item(Name="iphone10", Price=500, Barcode="123456789123")
+        db.session.add(item1)
+        # Commit the changes
+        db.session.commit()
+
+        # Add item 2 if barcode is unique
+        if not Item.query.filter_by(Barcode="123456789234").first():
+            item2 = Item(Name="iphone12", Price=600, Barcode="123456789234")
+            db.session.add(item2)
+            # Commit the changes
+            db.session.commit()
+    except Exception as e:
+        # If an error occurs, rollback changes
+        db.session.rollback()
+        print(f"Error: {str(e)}")
+
+    return redirect(url_for('home_page'))
+
+
+@app.route('/')
+def home_page():
+    return render_template("home.html")
+
+@app.route('/market')
+def market_page():
+    return render_template("market.html")
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
+
+
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+# SQLite3 database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'  # SQLite database file name
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize the database
+db = SQLAlchemy(app)
+
+# Define a model for your database table
+class Item(db.Model):
+    ID = db.Column(db.Integer, primary_key=True)
+    Name = db.Column(db.String(30), nullable=False, unique=True)
+    Price = db.Column(db.Integer(), nullable=False)
+    Barcode = db.Column(db.String(12), nullable=False, unique=True)
+    Description = db.Column(db.String(1024), nullable=True)
+
+# Route to view items in the database
+@app.route('/view_items')
+def view_items():
+    # Fetch all items from the database
+    items = Item.query.all()
+    return render_template("view_items.html", items=items)
+
+# Route for the home page
+@app.route('/')
+def home_page():
+    return render_template("home.html")
+
+# Route for the market page
+@app.route('/market')
+def market_page():
+    return render_template("market.html")
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
+
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+#from market.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>market page</title>
+    <!-- You can include additional CSS or JavaScript files here -->
+  <style>
+      /* Add some basic styling to the table */
+      table {
+          width: 100%;
+          border-collapse: collapse;
+      }
+      th {
+          border: 1px solid black;
+          padding: 8px;
+          text-align: left;
+      }
+  </style>
+</head>
+<body>
+
+    <!-- Your content goes here -->
+ {% include 'nav.html'%}
+
+   <h2>MARKET PAGE</h2>
+   <table>
+       <thead>
+           <tr>
+               <th>ID</th>
+               <th>Name</th>
+               <th>Barcode</th>
+               <th>Price</th>
+               <th>Description</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <td>1</td>
+               <td>Phone </td>
+               <td>1234567890</td>
+               <td>$19.99</td>
+               <td>
+                  <button class='btn btn-outline btn-info'>More Infor</button>
+                  <button class='btn btn-outline btn-success'>Purchase this Item</button>
+                </td>
+           </tr>
+           <tr>
+               <td>2</td>
+               <td>Laptop</td>
+               <td>0987654321</td>
+               <td>$152.49</td>
+               <td>
+                   <button class='btn btn-outline btn-info'>More Infor</button>
+                   <button class='btn btn-outline btn-success'>Purchase this Item</button>
+                 </td>
+           </tr>
+           <tr>
+               <td>3</td>
+               <td>Mouse</td>
+               <td>1357924680</td>
+               <td>$8.99</td>
+               <td>
+                  <button class='btn btn-outline btn-info'>More Infor</button>
+                  <button class='btn btn-outline btn-success'>Purchase this Item</button>
+                </td>
+           </tr>
+           <tr>
+               <td>4</td>
+               <td>CPU</td>
+               <td>2468013579</td>
+               <td>$74.99</td>
+               <td>
+                 <button class='btn btn-outline btn-info'>More Infor</button>
+                 <button class='btn btn-outline btn-success'>Purchase this Item</button>
+               </td>
+           </tr>
+       </tbody>
+   </table>
+
+    <!-- You can add more HTML elements as needed -->
+
+    <!-- You can include external scripts at the end of the body tag for better performance -->
+    <!-- Example: <script src="your-script.js"></script> -->
+</body>
+</html>
+
+return render_template("market.html")
+
+
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+
+
+app = Flask(__name__)
+# SQLite3 database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///market.db'  # SQLite database file name
+
+# Initialize the database
+db = SQLAlchemy(app)
+with app.app_context():
+    # Perform database operations
+    db.create_all()
+
+# Define a model for your database table
+class Item(db.Model):
+  ID = db.Column(db.Integer, primary_key=True)
+  Name = db.Column(db.String(30), nullable=False, unique=True)
+  Price = db.Column(db.Integer(), nullable=False)
+  Barcode = db.Column(db.String(12), nullable=False, unique=True)
+  Description = db.Column(db.String(1024), nullable=True)
+
+  def __repr__(self):
+      return f"Item(Name={self.Name}, Price={self.Price}, Barcode={self.Barcode}, Description={self.Description})"
+
+# Route to view items in the database
+@app.route('/view_items')
+def view_items():
+    # Fetch all items from the database
+    items = Item.query.all()
+    return render_template("view_items.html", items=items)
+
+@app.route('/add_item')
+def add_item():
+    # Create a new item
+    new_item = Item(Name='New Item', Price=9.99, Barcode='1234567890', Description='This is a new item.')
+
+    # Add the item to the database session
+    db.session.add(new_item)
+
+    # Commit the session to persist the changes
+    db.session.commit()
+
+    return 'Item added successfully!'
+
+# Route for the home page
+@app.route('/')
+def home_page():
+    return render_template("home.html")
+
+# Route for the market page
+@app.route('/market')
+def market_page():
+    items = Item.query.all()
+    return render_template('market.html', items=items)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
+
+route ya forms.py
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()  # Create an instance of RegisterForm
+
+    if request.method == 'POST' and form.validate_on_submit():
+        # Handle form submission
+        # For example, you can access form data using form.<field_name>.data
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+
+        # Process the data (e.g., store it in the database)
+
+        # Redirect to a success page, or return a success message
+        return "Registration successful!"
+
+    # If it's a GET request or the form didn't validate, render the registration form
+    return render_template('register.html', form=form)
+
+#my home page
+          <!doctype html>
+          <html lang="en">
+            <head>
+              <!-- Required meta tags -->
+              <meta charset="utf-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+              <!-- Bootstrap CSS -->
+              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+              <title>Homepage</title>
+             <style>
+            h2 {
+              margin-top: 4px;
+              margin-bottom: 2px;
+            }
+          </style> 
+            </head>
+            <body>
+              <!-- As a heading -->
+              {% include 'nav.html' %}
+
+
+             <h2><b>HOME PAGE</b></h2>
+
+
+              <!-- Optional JavaScript; choose one of the two! -->
+
+              <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+              <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+              <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
+              <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+              <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+              -->
+            </body>
+            <style>
+              body{
+                background-color: blue:
+              }
+            </style>
+          </html>
+
+register.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+  <title>Register</title>
+  <style>
+    body {
+      background-color: #007bff; /* Blue background color */
+      color: #fff; /* White text color */
+    }
+  </style>
+</head>
+<body class="text-center">
+  <div style="background-color: #007bff; color: #fff;"> <!-- Apply styles directly to the div -->
+    {% include 'nav.html' %}
+
+    <h1><strong>Register Form</strong></h1>
+    <div class="container">
+      <form method="POST" class="form-register">
+         {{ form.hidden_tag()}} <!-- protect from attacks by hackers! -->
+
+        <h1 class="h3 mb-3 font-weight-normal">Please Create your Account</h1>
+        <br>
+        {{ form.username.label() }}
+        {{ form.username(class="form-control", placeholder="Username") }}
+
+        {{ form.email_address.label() }}
+        {{ form.email_address(class="form-control", placeholder="Email Address") }}
+
+        {{ form.password1.label() }}
+        {{ form.password1(class="form-control", placeholder="Password") }}
+
+        {{ form.password2.label() }}
+        {{ form.password2(class="form-control", placeholder="Confirm Password") }}
+        <br>
+        {{ form.submit(class="btn btn-lg btn-primary")}}
+
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+
+
+<--login page
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>Login Page</title>
+  </head>
+  <body>
+    {% include 'nav.html' %}
+    <h1>Welcome to Simple HTML Page</h1>
+
+    <!-- Image tag -->
+    <img src="path_to_your_image.jpg" alt="Image Description">
+  </body>
+  </html>
+
+
+@app.route('/login', methods=['GET','POST'])
+def login_page():
+     form = LoginForm()
+     if form.validate_on_submit():
+         attempted_user = User.query.get(form.username.data).first()
+         login_user(attempted_user)
+         flash ('Login successful')
+
+
+ABOUT THE LOGIN PAGE
+from flask_login import LoginManager
+from flask_login import login_user,logout_user
+
+login_manager = LoginManager(app)
+
+
+
+
+@app.route('/market', methods=['GET', 'POST'])
+def market_page():
+    purchase_form = PurchaseItemForm()
+    if request.method == 'POST':
+      purchased_item = request.form.get(purchased_item)
+      p_item_object = Item.query.filter_by(name=purchased_item).first()
+
+    # Pass the items to the market.html template
+    items = [
+        {"id": 1, "name": "Laptop", "barcode": "123456789", "price": 1200},
+        {"id": 2, "name": "Keyboard", "barcode": "987654321", "price": 80},
+        {"id": 3, "name": "Mouse", "barcode": "567890123", "price": 40},
+        {"id": 4, "name": "Phone", "barcode": "334444444", "price": 450}  # New item
+    ]
+
+    return render_template("market.html", items=items, purchase_form = purchase_form)
+
+
+
+
+# Route for the market page
+@app.route('/market', methods=['GET', 'POST'])
+def market_page():
+    purchase_form = PurchaseItemForm()
+    sell_form = SellItemForm()
+    if request.method == 'POST' and purchase_form.validate_on_submit():
+        purchased_item = purchase_form.item.data
+        p_item_object = Item.query.filter_by(name=purchased_item).first()
+    if request.method == 'POST' and sell_form.validate_on_submit():
+        sell_item = sell_form.item.data
+        s_item_object = Item.query.filter_by(name=sell_item).first()
+
+        # Perform further processing or database operations here
+        # For example, you might add code to process the purchase
+
+    # Pass the items to the market.html template
+    items = [
+        {"id": 1, "name": "Laptop", "barcode": "123456789", "price": 1200},
+        {"id": 2, "name": "Keyboard", "barcode": "987654321", "price": 80},
+        {"id": 3, "name": "Mouse", "barcode": "567890123", "price": 40},
+        {"id": 4, "name": "Phone", "barcode": "334444444", "price": 450}  # New item
+    ]
+
+    return render_template("market.html", items=items, purchase_form=purchase_form,  sell_form=sell_form)
+
+
+
+
+

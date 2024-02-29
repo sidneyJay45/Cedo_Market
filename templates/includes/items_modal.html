@@ -1,0 +1,60 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- More Info -->
+<div class="modal fade" id="Modal-MoreInfo-{{ item.id}}"  tabindex="-1" aria-labelledby="exampleModallabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Modallabel">{{item.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ item.description }}<!-- Here goes the content -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Purchase this item -->
+<div class="modal fade" id="Modal-PurchaseConfirm-{{ item.id}}"  tabindex="-1" aria-labelledby="exampleModallabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="Modallabel">{{item.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form method="POST">
+          {{ purchase_form.hidden_tag()}}
+          <h4 class= 'text-center'>
+           Are you sure you want to buy {{ item.name}} for {{ item.price }}$ ? 
+          </h4>
+          <h6 class='text-center'>
+            By clicking on the button below, you will purchase the Item
+          </h6>
+          <br>
+          <input id="purchased_item" name="purchased_item" type="hidden" value="{{ item.name}}">
+          {{ purchase_form.submit(class="btn btn-outline-success btn-block")}}
+        
+        </form><!-- Here goes the content -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
