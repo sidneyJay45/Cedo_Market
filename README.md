@@ -12,6 +12,9 @@ This simple marketing app is built using Flask, a popular Python web framework. 
 
 ## Technologies Used
 Flask: A Python web framework used for building the app's structure and routing.
+
 SQLAlchemy: An Object-Relational Mapping (ORM) library used for interacting with the database.
+
 Jinja2: A templating engine used for rendering dynamic HTML pages.
+
 Bootstrap: A CSS framework used for styling the app's user interface.
